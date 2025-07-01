@@ -1,0 +1,35 @@
+import React from 'react'
+import { useAuthStore } from '../store/useAuthStore'
+
+import { Settings } from 'lucide-react'
+
+const GetProfile = ({profile}) => {
+    const{isSetting,changeSetting} = useAuthStore()
+    return (
+        <div className='w-full flex flex-col md:flex-row justify-between border border-gray-400 p-10 rounded-xl'>
+            <img src={profile.pic} alt="Profile Picture" className='w-[30%] rounded-full' />
+            <div className='w-[50%] text-center h-56  flex flex-col justify-evenly p-4'>
+                <p className='text-4xl font-semibold'>@{profile.username}</p>
+                <p className='text-gray-300 text-lg' >{profile.name}</p>
+                <p className='text-gray-400'>{profile.bio}</p>
+                <div className='flex justify-evenly  text-blue-500 bg-white/10 rounded-lg p-4'>
+                    <div >
+                        <p className='text-2xl  font-semibold'>Follower</p>
+                        <p className='text-white text-lg'>{profile.follower.length}</p>
+                    </div>
+                    <div>
+                        <p className='text-2xl  font-semibold'>Following</p>
+                        <p className='text-white text-lg'>{profile.following.length}</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button onClick={() =>changeSetting() }>
+                    <Settings className='hover:text-gray-200 hover:animate-spin' />
+                </button>
+            </div>
+        </div>
+    )
+}
+
+export default GetProfile
