@@ -2,8 +2,8 @@ import React from 'react'
 
 const ProfilePost = ({ profile }) => {
     return (
-        <div className='w-full p-4'>
-            <div className="grid grid-cols-3 gap-4 overflow-y-auto custom-scrollbar">
+        <div className='w-full p-4 '>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-1  ">
                 {
                     profile.map((post) => (
                         <div key={post.publicId} className="aspect-square w-full h-full overflow-hidden flex items-center justify-center bg-black/20 rounded border border-gray-600">

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
 
-// const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
 
 export const useAuthStore = create((set, get) => ({
     authUser: null,
@@ -15,17 +15,19 @@ export const useAuthStore = create((set, get) => ({
     isLoadingProfile:false,
     isCheckingAuth: false,
     isSetting:false,
+    isEdit:false,
     onlineUsers: [],
     socket: null,
     inputcss : 'border border-gray-500 hover:border-gray-200 w-full py-2 text-center rounded-md',
 
     changeSetting: () => set((state) => ({ isSetting: !state.isSetting })),
+    changeEdit:()=>set((state)=>({isEdit:!state.isEdit})),
 
     checkAuth: async () => {
         try {
             const res = await axiosInstance.get("/checkAuth");
             set({ authUser: res.data });
-            // get().connectSocket();
+            get().connectSocket();
         } catch (error) {
             console.log("Error in checkAuth:", error);
             set({ authUser: null });
@@ -40,7 +42,7 @@ export const useAuthStore = create((set, get) => ({
             const res = await axiosInstance.post("/signup", data);
             set({ authUser: res.data });
             toast.success("Account created successfully");
-            // get().connectSocket();
+            get().connectSocket();
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
@@ -56,7 +58,7 @@ export const useAuthStore = create((set, get) => ({
             set({ authUser: res.data });
             toast.success("Logged in successfully");
 
-            // get().connectSocket();
+            get().connectSocket();
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
@@ -66,10 +68,11 @@ export const useAuthStore = create((set, get) => ({
 
     logout: async () => {
         try {
-            await axiosInstance.post("/logout");
+            await axiosInstance.get("/logout");
             set({ authUser: null });
+            set({isSetting:false})
             toast.success("Logged out successfully");
-            // get().disconnectSocket();
+            get().disconnectSocket();
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -101,26 +104,26 @@ export const useAuthStore = create((set, get) => ({
         }finally{
             set({isLoadingProfile:false})
         }
-    }
+    },
 
-    // connectSocket: () => {
-    //     const { authUser } = get();
-    //     if (!authUser || get().socket?.connected) return;
+    connectSocket: () => {
+        const { authUser } = get();
+        if (!authUser || get().socket?.connected) return;
 
-    //     const socket = io(BASE_URL, {
-    //         query: {
-    //             userId: authUser._id,
-    //         },
-    //     });
-    //     socket.connect();
+        const socket = io(BASE_URL, {
+            query: {
+                userId: authUser._id,
+            },
+        });
+        socket.connect();
 
-    //     set({ socket: socket });
+        set({ socket: socket });
 
-    //     socket.on("getOnlineUsers", (userIds) => {
-    //         set({ onlineUsers: userIds });
-    //     });
-    // },
-    // disconnectSocket: () => {
-    //     if (get().socket?.connected) get().socket.disconnect();
-    // },
+        socket.on("getOnlineUsers", (userIds) => {
+            set({ onlineUsers: userIds });
+        });
+    },
+    disconnectSocket: () => {
+        if (get().socket?.connected) get().socket.disconnect();
+    },
 }));
