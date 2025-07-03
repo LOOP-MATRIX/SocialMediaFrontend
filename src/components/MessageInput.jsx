@@ -53,24 +53,22 @@ const MessageInput = () => {
     }
   };
 
-
   return (
-    <div className="p-4 w-full">
+    <div className="p-3 w-full ">
       {imagePreview && (
-        <div className="mb-3 flex items-center gap-2">
+        <div className="mb-2 flex items-center gap-2">
           <div className="relative">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-contain rounded-lg border border-zinc-700"
+              className="w-16 h-16 object-contain rounded-md"
             />
             <button
               onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300
-              flex items-center justify-center"
+              className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center"
               type="button"
             >
-              <X className="size-3" />
+              <X className="w-3 h-3 text-gray-600" />
             </button>
           </div>
         </div>
@@ -80,7 +78,7 @@ const MessageInput = () => {
         <div className="flex-1 flex gap-2">
           <input
             type="text"
-            className="w-full input input-bordered rounded-lg input-sm sm:input-md"
+            className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-base sm:py-2"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -95,19 +93,20 @@ const MessageInput = () => {
 
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`hidden sm:flex w-8 h-8 rounded-full items-center justify-center ${
+              imagePreview ? "text-blue-600" : "text-gray-400"
+            }`}
             onClick={() => fileInputRef.current?.click()}
           >
-            <Image size={20} />
+            <Image size={18} />
           </button>
         </div>
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
+          className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center disabled:bg-gray-800 disabled:cursor-not-allowed"
           disabled={!text.trim() && !imagePreview}
         >
-          <Send size={22} />
+          <Send size={18} />
         </button>
       </form>
     </div>

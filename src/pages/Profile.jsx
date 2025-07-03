@@ -3,19 +3,19 @@ import { useAuthStore } from '../store/useAuthStore'
 
 import ProfilePost from '../components/ProfilePost'
 import GetProfile from '../components/GetProfile'
+import Follower from '../components/Follower'
 
 import { Loader, LogOut } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 
 const Profile = () => {
-  const { getProfile, logout, authUser,inputcss, myprofile, isLoadingProfile, isSetting, isEdit ,changeEdit} = useAuthStore()
+  const { getProfile, logout, authUser,inputcss, myprofile, isLoadingProfile, isSetting, isEdit ,changeEdit,isFollowTab } = useAuthStore()
 
   useEffect(() => {
-    AOS.init({ duration: 500, once: true }); // animate once and for 500ms
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   useEffect(() => {
@@ -23,8 +23,6 @@ const Profile = () => {
       getProfile();
     }
   }, [getProfile, authUser]);
-
-  console.log(authUser)
 
   const [formData,setFormData]=useState({
     username:authUser.username,
@@ -49,10 +47,8 @@ const Profile = () => {
     );
   }
 
-  console.log(formData)
-
   return (
-    <div className='xl:w-1/2 lg:w-2/3 w-full relative '>
+    <div className='xl:w-1/2 lg:w-2/3 w-full relative overflow-y-auto custom-scrollbar'>
       <GetProfile profile={myprofile} />
       <div className=''>
         <ProfilePost profile={myprofile.posts} />
@@ -84,6 +80,12 @@ const Profile = () => {
             <input type="text" placeholder='bio' value={formData.bio} onChange={(e)=>setFormData((prev)=>({...prev,[e.target.name]:e.target.value}))}  className={inputcss}/>
             <button className='py-2 bg-blue-400 rounded-lg'>UPDATE</button>
           </div>
+        )
+      }
+
+      {
+        isFollowTab && (
+          <Follower follower={myprofile.follower} following={myprofile.following}/>
         )
       }
 

@@ -37,7 +37,7 @@ const Login = () => {
             isLoggingIn ? (<Loader className="size-7 animate-spin " />) : 'Send'
           }</button>
           <p className='text-center'>
-            Already have an Account? <Link to='/signup' className="text-blue-600 underline">SignUp</Link>
+            Don't have an Account? <Link to='/signup' className="text-blue-600 underline">SignUp</Link>
           </p>
         </div>
       </form>

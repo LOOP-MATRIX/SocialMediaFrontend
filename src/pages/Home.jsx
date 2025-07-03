@@ -23,11 +23,11 @@ const Home = () => {
   }
 
   return (
-    <div className='text-white xl:w-1/2 lg:w-2/3 w-full p-4 overflow-y-auto custom-scrollbar'>
+    <div className='text-white lg:w-2/7 w-full p-4 overflow-y-auto custom-scrollbar'>
       {
         posts.map((post) => (
           <div key={post._id}>
-            <SinglePost post={post} />
+            <SinglePost post={post} isHomePost={true}/>
             <p className='w-full mb-8 text-white'>{post.comment}</p>
           </div>
         ))

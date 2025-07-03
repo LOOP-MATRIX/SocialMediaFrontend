@@ -13,6 +13,8 @@ import { Toaster } from "react-hot-toast";
 
 import { useAuthStore } from './store/useAuthStore'
 import Navbar from './components/Navbar'
+import OtherProfile from './pages/OtherProfile'
+import SinglePostDetails from './pages/SinglePostDetails'
 
 const App = () => {
   const {authUser,checkAuth,isCheckingAuth} = useAuthStore()
@@ -35,12 +37,18 @@ const App = () => {
         <Route path='/login' element={!authUser?<Login/>:<Navigate to='/'/>}/>
         <Route path='/' element={authUser?<Home/>:<Navigate to='/login'/>}/>
         <Route path='/profile' element={authUser?<Profile/>:<Navigate to='/login'/>}/>
+        <Route path='/othersprofile/:id' element={authUser?<OtherProfile/>:<Navigate to='/login'/>}/>
+        <Route path='/singlepostdetails/:id' element={authUser?<SinglePostDetails/>:<Navigate to='/login'/>}/>
         <Route path='/createpost' element={authUser?<CreatePost/>:<Navigate to='/login'/>}/>
         <Route path='/chat' element={authUser?<Chat/>:<Navigate to='/login'/>}/>
         <Route path='/search' element={authUser?<SearchPage/>:<Navigate to='/login'/>}/>
       </Routes>
       <Toaster/>
-      <Navbar/>
+      {
+        authUser && (
+          <Navbar/>
+        )
+      }
     </div>
   )
 }

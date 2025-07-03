@@ -21,9 +21,7 @@ const ChatContainer = () => {
 
   useEffect(() => {
     getMessages(selectedUser._id);
-
     subscribeToMessages();
-
     return () => unsubscribeFromMessages();
   }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
 
@@ -44,18 +42,19 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="w-full flex-1 flex flex-col overflow-auto">
+    <div className="w-full flex-1 flex flex-col bg-amber-600/5  overflow-auto">
       <ChatHeader />
-
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-3 space-y-3">
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
+            className={`flex flex-col ${
+              message.senderId === authUser._id ? "items-end" : "items-start"
+            }`}
             ref={messageEndRef}
           >
-            <div className=" chat-image avatar">
-              <div className="size-10 rounded-full border">
+            <div className="flex items-center">
+              <div className="w-8 h-8 rounded-full overflow-hidden">
                 <img
                   src={
                     message.senderId === authUser._id
@@ -63,28 +62,34 @@ const ChatContainer = () => {
                       : selectedUser.pic || "/avatar.png"
                   }
                   alt="profile pic"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
-            <div className="chat-header mb-1">
-              <time className="text-xs opacity-50 ml-1">
+            <div className="mt-1">
+              <time className="text-xs text-gray-400">
                 {formatMessageTime(message.createdAt)}
               </time>
             </div>
-            <div className="chat-bubble flex flex-col">
+            <div
+              className={`max-w-[80%] p-2 rounded-md ${
+                message.senderId === authUser._id
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-700"
+              }`}
+            >
               {message.image && (
                 <img
                   src={message.image}
                   alt="Attachment"
-                  className="sm:max-w-[200px] rounded-md mb-2"
+                  className="max-w-[150px] rounded-md mb-1"
                 />
               )}
-              {message.text && <p>{message.text}</p>}
+              {message.text && <p className="text-sm">{message.text}</p>}
             </div>
           </div>
         ))}
       </div>
-
       <MessageInput />
     </div>
   );

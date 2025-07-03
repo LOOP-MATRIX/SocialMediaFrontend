@@ -3,25 +3,31 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-
 const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
 
 export const useAuthStore = create((set, get) => ({
     authUser: null,
-    myprofile:null,
+    myprofile: null,
+    othersprofile: null,
     isSigningUp: false,
     isLoggingIn: false,
     isUpdatingProfile: false,
-    isLoadingProfile:false,
+    isLoadingProfile: false,
     isCheckingAuth: false,
-    isSetting:false,
-    isEdit:false,
+    isSetting: false,
+    isEdit: false,
+    isFollowTab: false,
+    isLikeTab:false,
+    isCommentTab:false,
     onlineUsers: [],
     socket: null,
-    inputcss : 'border border-gray-500 hover:border-gray-200 w-full py-2 text-center rounded-md',
+    inputcss: 'border border-gray-500 hover:border-gray-200 w-full py-2 text-center rounded-md',
 
     changeSetting: () => set((state) => ({ isSetting: !state.isSetting })),
-    changeEdit:()=>set((state)=>({isEdit:!state.isEdit})),
+    changeEdit: () => set((state) => ({ isEdit: !state.isEdit })),
+    changeFollowTab: () => set((state) => ({ isFollowTab: !state.isFollowTab })),
+    changeLikedTab: () => set((state) => ({ isLikeTab: !state.isLikeTab })),
+    changeCommentTab: () => set((state) => ({ isCommentTab: !state.isCommentTab })),
 
     checkAuth: async () => {
         try {
@@ -70,7 +76,7 @@ export const useAuthStore = create((set, get) => ({
         try {
             await axiosInstance.get("/logout");
             set({ authUser: null });
-            set({isSetting:false})
+            set({ isSetting: false })
             toast.success("Logged out successfully");
             get().disconnectSocket();
         } catch (error) {
@@ -92,19 +98,35 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
-    getProfile: async()=>{
-        set({isLoadingProfile:true})
+    getProfile: async () => {
+        set({ isLoadingProfile: true })
         try {
-            const res =await axiosInstance.get('/getprofile')
-            console.log(res.data.data)
-            set({myprofile:res.data.data})
+            const res = await axiosInstance.get('/getprofile')
+            set({ myprofile: res.data.data })
         } catch (error) {
+            set({ myprofile: null })
             console.log("error in getting profile:", error);
             toast.error(error.response.data.message);
-        }finally{
-            set({isLoadingProfile:false})
+        } finally {
+            set({ isLoadingProfile: false })
         }
     },
+
+    getOthersProfile: async (id) => {
+        if (!id) return;
+        set({ isLoadingProfile: true });
+        try {
+            const res = await axiosInstance.get(`/getOthersProfile/${id}`);
+            set({ othersprofile: res.data.data });
+        } catch (error) {
+            set({ othersprofile: null });
+            console.log("error in getting profile:", error);
+            toast.error(error.response?.data?.message || "Failed to load profile");
+        } finally {
+            set({ isLoadingProfile: false });
+        }
+    },
+
 
     connectSocket: () => {
         const { authUser } = get();
