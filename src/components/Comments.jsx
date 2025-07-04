@@ -31,7 +31,10 @@ const Comments = ({ comments }) => {
         AOS.init({ duration: 500, once: true });
     }, []);
 
-
+    const sendComment =(postId, authUser, comment)=>{
+        addComment(postId, authUser, comment)
+        setcomment('')
+    }
 
     return (
         <div data-aos="fade-up" className='border border-gray-800 absolute  bottom-0 h-[80%] z-20 bg-black/95 w-full rounded-xl'>
@@ -77,7 +80,7 @@ const Comments = ({ comments }) => {
             }
             <div className='w-full flex justify-center fixed bottom-12 bg-white/10 pb-2 px-4 pt-4 rounded-t-2xl z-10 gap-4'>
                 <input className='border w-full py-2 pl-4 rounded-full' type="text" value={comment} onChange={(e) => setcomment(e.target.value)} />
-                <button onClick={() => addComment(postId, authUser, comment)} className='text-blue-400'><Send /></button>
+                <button onClick={() => sendComment(postId, authUser, comment)} className='text-blue-400'><Send /></button>
             </div>
         </div>
     )

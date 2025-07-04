@@ -43,7 +43,7 @@ const GetProfile = ({ profile }) => {
             <div className='w-full flex flex-col md:flex-row items-center  justify-evenly'>
                 {
                     profile.pic ? (
-                        <img src={profile.pic} alt="Profile Picture" className='w-[80%] md:w-[30%] rounded-full' />
+                        <img src={profile.pic} alt="Profile Picture" className='w-[80%] h-[80%] md:h-[30%] md:w-[30%] rounded-full' />
                     ) : (
                         <Loader />
                     )

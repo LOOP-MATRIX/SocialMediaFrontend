@@ -116,7 +116,7 @@ const Profile = () => {
 
 
       {isEdit && (
-        <div className="absolute inset-0 w-100 flex flex-col gap-8 h-fit p-4 left-3 top-30 rounded-2xl md:left-50 border border-purple-400 x-60 backdrop-blur-2xl bg-black/70">
+        <div className="absolute inset-0 w-80 md:w-100 flex flex-col gap-8 h-fit p-4 left-3 top-30 rounded-2xl md:left-50 border border-purple-400 x-60 backdrop-blur-2xl bg-black/70">
           <div className="w-full px-4 flex justify-between items-center">
             <p>UPDATE PROFILE</p>
             <button onClick={changeEdit} className="text-2xl text-red-400 font-bold">x</button>
