@@ -30,7 +30,7 @@ const CreatePost = () => {
     setFiles([]);
   };
   return (
-    <div className="xl:w-1/2 lg:w-2/3 w-full h-screen bg-black flex items-center justify-center p-4">
+    <div className="xl:w-1/2 lg:w-2/3 w-full h-screen overflow-y-auto custom-scrollbar bg-black flex items-center justify-center p-4">
       <div className="w-full h-screen  rounded-lg shadow-xl p-6">
         <h2 className="text-2xl font-semibold text-white mb-6 text-center">
           Create New Post
@@ -65,7 +65,7 @@ const CreatePost = () => {
                 <p className="mt-2 text-sm text-gray-400">
                   {files.length} file{files.length > 1 ? 's' : ''} selected
                 </p>
-                <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4 h-80 md:h-56 overflow-y-auto custom-scrollbar">
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4 h-30 md:h-56 overflow-y-auto custom-scrollbar">
                   {files.map((file, index) => (
                     <div key={index} className="relative w-full h-48 border border-gray-700 rounded overflow-hidden">
                       <img
