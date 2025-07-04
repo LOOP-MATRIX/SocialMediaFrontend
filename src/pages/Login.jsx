@@ -29,7 +29,7 @@ const Login = () => {
   return (
     <div className='w-full md:w-1/2 flex flex-col justify-center px-4 gap-4 items-center'>
       <p className='text-5xl h-15 font-semibold bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent'>Login</p>
-      <form className='border-gray-500 transition-all hover:scale-101 ease-in-out duration-300 hover:shadow-lg hover:border-gray-200 hover:shadow-gray-700 w-full md:w-1/2 h-1/4 md:h-2/5 flex flex-col justify-evenly items-center border-2 rounded-lg p-4' onSubmit={submitform}>
+      <form className='border-gray-500 transition-all hover:scale-101 ease-in-out duration-300 hover:shadow-lg hover:border-gray-200 hover:shadow-gray-700 w-full md:w-1/2 h-[40%] md:h-2/5 flex flex-col justify-evenly items-center border-2 rounded-lg p-4' onSubmit={submitform}>
         <input type="text" placeholder='email' className={inputcss} name='email' onChange={changeformdata} value={formData.email} />
         <input type="text" placeholder='password' className={inputcss} name='password' onChange={changeformdata} value={formData.password} />
         <div className='w-full'>
