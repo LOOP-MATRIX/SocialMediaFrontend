@@ -7,6 +7,7 @@ import Profile from './pages/Profile'
 import Chat from './pages/Chat'
 import SearchPage from './pages/Search'
 import CreatePost from './pages/CreatePost'
+import NotFound from './pages/NotFound'
 
 import { Loader, Search } from 'lucide-react'
 import { Toaster } from "react-hot-toast";
@@ -42,6 +43,7 @@ const App = () => {
         <Route path='/createpost' element={authUser?<CreatePost/>:<Navigate to='/login'/>}/>
         <Route path='/chat' element={authUser?<Chat/>:<Navigate to='/login'/>}/>
         <Route path='/search' element={authUser?<SearchPage/>:<Navigate to='/login'/>}/>
+        <Route path='/*' element={<NotFound/>}/>
       </Routes>
       <Toaster/>
       {
