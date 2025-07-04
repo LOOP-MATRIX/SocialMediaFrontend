@@ -11,8 +11,10 @@ import { Loader } from 'lucide-react';
 import Comments from '../components/Comments';
 
 const SinglePostDetails = () => {
+
     const { singlePostDetails, getSinglePost, isPostLoading } = usePostStore();
     const { isLikeTab,isCommentTab } = useAuthStore()
+    
 
     const { id } = useParams();
     useEffect(() => {
@@ -38,7 +40,7 @@ const SinglePostDetails = () => {
     }
 
     return (
-        <div className='w-full lg:w-2/7 px-2 flex flex-col items-center overflow-y-auto custom-scrollbar relative'>
+        <div className='xl:w-2/7 lg:w-3/8 md:w-4/8 w-full px-2 flex flex-col items-center overflow-y-auto custom-scrollbar relative'>
             <SinglePost post={singlePostDetails} isHomePost={false} />
             {
                 isLikeTab && (
@@ -47,7 +49,7 @@ const SinglePostDetails = () => {
             }
             {
                 isCommentTab && (
-                    <Comments comments={singlePostDetails.comments} postId={singlePostDetails._id} />
+                    <Comments comments={singlePostDetails.comments} />
                 )
             }
         </div>

@@ -7,11 +7,13 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore';
 import { usePostStore } from '../store/usePostStore';
 
-const Comments = ({ comments, postId }) => {
+const Comments = ({ comments }) => {
     console.log(comments)
     const { changeCommentTab, authUser } = useAuthStore()
-    const { addComment, removeComment } = usePostStore()
+    const { addComment, removeComment, singlePostDetails } = usePostStore()
     const [comment, setcomment] = useState('')
+    const postId = singlePostDetails._id
+    const postOwner = singlePostDetails.createdBy._id
 
     const navigate = useNavigate()
     const navigateCommentTabClose = (id) => {
@@ -42,16 +44,27 @@ const Comments = ({ comments, postId }) => {
                         {
                             comments.map((f, index) => (
                                 <div key={index} className='w-full flex justify-between items-start border-b rounded-xl gap-6  border-gray-500 p-2'>
-                                    <div onClick={() => navigateCommentTabClose(f.user._id)}  className='flex gap-4 items-center'>
+                                    <div onClick={() => navigateCommentTabClose(f.user._id)} className='flex gap-4 items-center'>
                                         <img src={f.user.pic} alt={f.user.name} className='w-20 h-20 rounded-full' />
                                         <div className='flex flex-col'>
                                             <p className='text-lg text-blue-400 font-semibold'>@{f.user.username}</p>
                                             <p className=' text-gray-400'>{f.comment}</p>
                                         </div>
                                     </div>
-                                    <div className=' right-2'>
-                                        <button onClick={() => removeComment(postId, authUser,f._id)}><EllipsisVertical /></button>
-                                    </div>
+                                    {
+                                        authUser._id === postOwner && (
+                                            <div className=' right-2'>
+                                                <button onClick={() => removeComment(postId, authUser, f._id)}><EllipsisVertical /></button>
+                                            </div>
+                                        )
+                                    }
+                                    {
+                                        authUser._id !== postOwner && authUser._id === f.user._id && (
+                                            <div className=' right-2'>
+                                                <button onClick={() => removeComment(postId, authUser, f._id)}><EllipsisVertical /></button>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             ))
                         }

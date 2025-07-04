@@ -49,13 +49,22 @@ const SinglePost = ({ post, isHomePost }) => {
     );
   };
 
+  
+      const singlepostnavigate = (id) => {
+          if (authUser && id === authUser._id) {
+              navigate(`/profile`)
+          } else {
+              navigate(`/othersprofile/${id}`)
+          }
+      }
+
   const truncatecaption = post.caption.toString().length > 35 ? post.caption.toString().slice(0, 35) + '...' : post.caption
 
 
   return (
     <div className=" w-full mx-auto flex flex-col border border-gray-500 text-white bg-black rounded-lg overflow-hidden">
 
-      <div className=" w-full flex gap-4 py-2 px-4 border-b border-gray-500">
+      <div onClick={()=>singlepostnavigate(post.createdBy._id)} className=" w-full flex gap-4 py-2 px-4 border-b border-gray-500">
         <img
           src={post.createdBy.pic}
           alt=""

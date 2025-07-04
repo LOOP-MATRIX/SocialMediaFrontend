@@ -4,7 +4,7 @@ import SinglePost from '../components/SinglePost'
 import { usePostStore } from '../store/usePostStore'
 import { useAuthStore } from '../store/useAuthStore'
 
-import { Loader } from 'lucide-react'
+import { Loader,Frown  } from 'lucide-react'
 
 const Home = () => {
   const { posts, getFollowingPost, isPostLoading } = usePostStore()
@@ -23,14 +23,22 @@ const Home = () => {
   }
 
   return (
-    <div className='text-white lg:w-2/7 w-full p-4 overflow-y-auto custom-scrollbar '>
+    <div className='text-white xl:w-2/7 lg:w-3/8 md:w-4/8 w-full p-4 overflow-y-auto custom-scrollbar '>
       {
-        posts.map((post,index) => (
+        posts.length > 0 ? (
+          posts.map((post,index) => (
             <div key={post._id}>
               <SinglePost post={post} isHomePost={true} />
               <p className='w-full mb-8 text-white'>{post.comment}</p>
             </div>
         ))
+        ):(
+          <div className='h-full gap-4 text-center w-full flex flex-col justify-center items-center'>
+            <Frown size={100}/>
+            <p className='text-4xl'>No Post Available!</p>
+            <p className='text-gray-300'>Follow SomeOne or Wait Until Your Friend Post Something</p>
+          </div>
+        )
       }
     </div>
   )

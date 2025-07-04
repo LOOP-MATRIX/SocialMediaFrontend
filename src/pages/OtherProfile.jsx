@@ -6,10 +6,11 @@ import GetProfile from '../components/GetProfile';
 import ProfilePost from '../components/ProfilePost';
 import Follower from '../components/Follower'
 
-import { Loader } from 'lucide-react';
+import { Loader,UserLock  } from 'lucide-react';
 
 const OtherProfile = () => {
-  const { isLoadingProfile, getOthersProfile, othersprofile ,isFollowTab} = useAuthStore()
+  const { isLoadingProfile, getOthersProfile, othersprofile, isFollowTab } = useAuthStore()
+  console.log(othersprofile)
 
   const { id } = useParams()
 
@@ -42,17 +43,30 @@ const OtherProfile = () => {
           <GetProfile profile={othersprofile} />
         )
       }
-      <div className=''>
-        {othersprofile && (<ProfilePost profile={othersprofile.posts} />)}
-      </div>
+      {
+        othersprofile.isPrivate && !othersprofile.relationship.amIFollowing ? (
+          <div className='h-fit mt-10 gap-4 text-center w-full flex flex-col justify-center items-center'>
+            <UserLock  size={100} />
+            <p className='text-4xl'>This is a Private Account!</p>
+            <p className='text-gray-300'>Follow Them To See Their Post</p>
+          </div>
+        ) : (
+          <div className=''>
+            {othersprofile && (<ProfilePost profile={othersprofile.posts} />)}
+          </div>
+        )
+      }
 
       {
         isFollowTab && !othersprofile.isPrivate && (
-          <Follower follower={othersprofile.follower} following={othersprofile.following} userId={othersprofile._id}/>
+          <Follower follower={othersprofile.follower} following={othersprofile.following} userId={othersprofile._id} />
         )
       }
     </div>
   )
 }
+
+
+
 
 export default OtherProfile
