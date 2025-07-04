@@ -48,7 +48,7 @@ const OtherProfile = () => {
 
       {
         isFollowTab && !othersprofile.isPrivate && (
-          <Follower follower={othersprofile.follower} following={othersprofile.following}/>
+          <Follower follower={othersprofile.follower} following={othersprofile.following} userId={othersprofile._id}/>
         )
       }
     </div>

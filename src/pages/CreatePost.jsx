@@ -12,9 +12,6 @@ const CreatePost = () => {
     setFiles(Array.from(e.target.files));
   };
 
-  useEffect(() => {
-    console.log(files)
-  }, [files])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

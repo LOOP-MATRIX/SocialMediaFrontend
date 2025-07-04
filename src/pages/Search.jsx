@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { usePostStore } from '../store/usePostStore'
+import { useNavigate } from 'react-router-dom'
 
 import { Loader, SearchCheck } from 'lucide-react'
 import ProfilePost from '../components/ProfilePost'
@@ -10,7 +11,7 @@ import { useSearchPost } from '../store/useSearchProfile'
 const Search = () => {
 
   const { getPopularPosts, isPostLoading, popularPosts } = usePostStore()
-
+  const {authUser}= useAuthStore()
   const { isSearching, searchedUser, getSearchResult } = useSearchPost();
 
   const [search, setsearch] = useState('')
@@ -24,6 +25,16 @@ const Search = () => {
 
     return () => clearTimeout(timer);
   }, [search]);
+
+  const navigate = useNavigate()
+
+  const navigateToOtherProfile = (id) => {
+    if (authUser && id === authUser._id) {
+      navigate(`/profile`)
+    } else {
+      navigate(`/othersprofile/${id}`)
+    }
+  }
 
   useEffect(() => {
     if (debouncedTerm) {
@@ -61,7 +72,6 @@ const Search = () => {
           type="text"
           onChange={(e) => setsearch(e.target.value)}
           onFocus={() => setShowSearchBox(true)}
-          onBlur={() => setShowSearchBox(false)}
           className='pl-12 py-2 bg-black/50 rounded-3xl border text-blue-400 border-gray-300 w-full'
           placeholder='Search by @id or name'
         />
@@ -70,7 +80,7 @@ const Search = () => {
           <div className='sticky h-fit border p-1 rounded-md border-gray-800 my-1 bg-black/80'>
             {searchedUser ? (
               searchedUser.map((user) => (
-                <div key={user._id} className='w-full flex border-b rounded-xl gap-6  items-center border-gray-500 p-2'>
+                <div key={user._id} onClick={()=>navigateToOtherProfile(user._id)} className='w-full flex border-b rounded-xl gap-6  items-center border-gray-500 p-2'>
                   <img src={user.pic} alt={user.name} className='w-20 h-20 rounded-full' />
                   <div className='flex flex-col'>
                     <p className='text-xl text-blue-400 font-semibold'>@{user.username}</p>

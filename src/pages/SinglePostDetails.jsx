@@ -8,11 +8,11 @@ import { useAuthStore } from '../store/useAuthStore';
 import Liked from '../components/Liked';
 
 import { Loader } from 'lucide-react';
+import Comments from '../components/Comments';
 
 const SinglePostDetails = () => {
     const { singlePostDetails, getSinglePost, isPostLoading } = usePostStore();
-    console.log(singlePostDetails)
-    const { isLikeTab } = useAuthStore()
+    const { isLikeTab,isCommentTab } = useAuthStore()
 
     const { id } = useParams();
     useEffect(() => {
@@ -38,11 +38,16 @@ const SinglePostDetails = () => {
     }
 
     return (
-        <div className='w-full lg:w-2/7 px-2 flex flex-col items-center relative'>
+        <div className='w-full lg:w-2/7 px-2 flex flex-col items-center overflow-y-auto custom-scrollbar relative'>
             <SinglePost post={singlePostDetails} isHomePost={false} />
             {
                 isLikeTab && (
                     <Liked like={singlePostDetails.likes} />
+                )
+            }
+            {
+                isCommentTab && (
+                    <Comments comments={singlePostDetails.comments} postId={singlePostDetails._id} />
                 )
             }
         </div>

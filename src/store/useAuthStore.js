@@ -17,8 +17,9 @@ export const useAuthStore = create((set, get) => ({
     isSetting: false,
     isEdit: false,
     isFollowTab: false,
-    isLikeTab:false,
-    isCommentTab:false,
+    isRequestTab: false,
+    isLikeTab: false,
+    isCommentTab: false,
     onlineUsers: [],
     socket: null,
     inputcss: 'border border-gray-500 hover:border-gray-200 w-full py-2 text-center rounded-md',
@@ -28,6 +29,7 @@ export const useAuthStore = create((set, get) => ({
     changeFollowTab: () => set((state) => ({ isFollowTab: !state.isFollowTab })),
     changeLikedTab: () => set((state) => ({ isLikeTab: !state.isLikeTab })),
     changeCommentTab: () => set((state) => ({ isCommentTab: !state.isCommentTab })),
+    changeRequestTab: () => set((state) => ({ isRequestTab: !state.isRequestTab })),
 
     checkAuth: async () => {
         try {
@@ -148,4 +150,49 @@ export const useAuthStore = create((set, get) => ({
     disconnectSocket: () => {
         if (get().socket?.connected) get().socket.disconnect();
     },
+
+    updateProfile: async (formData) => {
+        set({ isUpdatingProfile: true })
+        try {
+            const res = await axiosInstance.put("/updateprofile", formData, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            toast.success("Profile updated successfully!");
+        } catch (err) {
+            console.error("Update failed:", err.response?.data?.message);
+            toast.error(err.response?.data?.message || "Update failed");
+        } finally {
+            set({ isUpdatingProfile: false })
+        }
+    },
+
+    setAccountPrivacy: async (isPrivate) => {
+        try {
+            if (typeof isPrivate !== "boolean") {
+                toast.error("Privacy value must be true or false")
+                return
+            }
+
+            const res = await axiosInstance.put("/setPrivacy", { isPrivate })
+
+            if (res.data.success) {
+                set((state) => ({
+                    myprofile: {
+                        ...state.myprofile,
+                        isPrivate,
+                    },
+                }));
+                toast.success(res.data.message)
+            }
+        } catch (err) {
+            console.error("Error setting privacy:", err)
+            toast.error(
+                err?.response?.data?.message || "Failed to update privacy settings"
+            )
+        }
+    },
+
 }));
