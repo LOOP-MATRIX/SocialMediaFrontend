@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {Routes,Route, Navigate} from 'react-router-dom'
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Home from './pages/Home'
@@ -8,6 +8,7 @@ import Chat from './pages/Chat'
 import SearchPage from './pages/Search'
 import CreatePost from './pages/CreatePost'
 import NotFound from './pages/NotFound'
+import Header from './components/Header'
 
 import { Loader, Search } from 'lucide-react'
 import { Toaster } from "react-hot-toast";
@@ -19,6 +20,7 @@ import SinglePostDetails from './pages/SinglePostDetails'
 
 const App = () => {
   const {authUser,checkAuth,isCheckingAuth} = useAuthStore()
+  const location = useLocation();
   useEffect(()=>{
     checkAuth()
   },[checkAuth])
@@ -32,7 +34,7 @@ const App = () => {
 
   return (
     <div className='w-full h-screen flex justify-center text-white bg-black '>
-
+    {location.pathname === '/' && <Header />}
       <Routes>
         <Route path='/signup' element={!authUser?<Signup/>:<Navigate to='/'/>}/>
         <Route path='/login' element={!authUser?<Login/>:<Navigate to='/'/>}/>
