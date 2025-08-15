@@ -62,7 +62,7 @@ const SinglePost = ({ post, isHomePost }) => {
 
 
   return (
-    <div className=" w-full mx-auto flex flex-col border border-gray-500 text-white bg-black rounded-lg overflow-hidden">
+    <div className=" w-full mx-auto flex flex-col border border-gray-500 text-white backdrop-blur-sm rounded-lg overflow-hidden">
 
       <div onClick={()=>singlepostnavigate(post.createdBy._id)} className=" w-full flex gap-4 py-2 px-4 border-b border-gray-500">
         <img

@@ -22,8 +22,43 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #6b7280;
   }
+
+  @keyframes bounce-opacity {
+    0%{
+      transform: translateY(-55%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+      opacity: 0.1;
+    }
+  }
+
+  .animate-bounce-opacity {
+    animation: bounce-opacity 5s infinite;
+  }
 }
 
 html {
   scroll-behavior: smooth;
 }
+
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+

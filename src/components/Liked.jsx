@@ -23,7 +23,7 @@ const Liked = ({ like }) => {
     }, []);
 
     return (
-        <div data-aos="fade-up" className='border border-gray-800 absolute bottom-0 h-[80%] bg-black/95 w-full rounded-xl'>
+        <div data-aos="fade-up" className='border border-gray-800 absolute bottom-0 h-[80%] bg-black/95 backdrop-blur-sm w-full rounded-xl'>
             <button onClick={() => changeLikedTab()} className='absolute bg-white/20 p-1 m-2 rounded-full'><ArrowLeft /></button>
                 <p className='text-center text-2xl  py-2 text-purple-400 font-bold'>Likes</p>
             <div className=' w-full overflow-y-auto custom-scrollbar'>

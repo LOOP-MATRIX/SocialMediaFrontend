@@ -42,7 +42,7 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="w-full flex-1 flex flex-col bg-amber-600/5  overflow-auto">
+    <div className="w-full flex-1 flex flex-col backdrop-blur-sm overflow-auto">
       <ChatHeader />
       <div className="flex-1 overflow-y-auto p-3 space-y-3">
         {messages.map((message) => (

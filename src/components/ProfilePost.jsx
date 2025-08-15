@@ -13,7 +13,7 @@ const ProfilePost = ({ profile }) => {
     }
 
     return (
-        <div className='w-full p-4 '>
+        <div className='w-full p-4 backdrop-blur-sm'>
             {
                 profile.length > 0 ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-1  ">
