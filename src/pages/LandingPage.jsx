@@ -110,7 +110,7 @@ export default function LandingPage() {
         <div className="bg-black text-white w-full min-h-screen flex flex-col">
             {/* Navbar */}
             <nav className="fixed w-full z-50 bg-white/10 backdrop-blur-md border-b border-white/20 p-4 flex justify-between items-center">
-                <h1 className="text-2xl font-bold">SocialSphere</h1>
+                <h1 className="text-2xl font-bold">Pulse Link</h1>
                 <div className="space-x-6">
                     <a href="#features" className="hover:text-pink-400 transition">
                         Features
